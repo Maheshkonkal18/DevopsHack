@@ -1,4 +1,4 @@
-name: Project CI Pipeline
+name: Full-Stack CI Pipeline
 
 on:
   push:
@@ -10,20 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout Repo
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # Step 2: Setup Node
       - name: Setup NodeJS
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install Dependencies
+      # ===============================
+      # BACKEND
+      # ===============================
+      - name: Install Backend Dependencies
         run: |
           cd server
           npm install
 
-      - name: Run Tests
+      - name: Run Backend Tests
         run: |
           cd server
           npm test --silent || echo "No tests found"
@@ -31,12 +36,15 @@ jobs:
       - name: Build Backend
         run: |
           cd server
-          npm run build || echo "No build step"
+          npm run build || echo "No backend build script"
 
-      - name: Install Frontend
+      # ===============================
+      # FRONTEND
+      # ===============================
+      - name: Install Frontend Dependencies
         run: |
           cd client
-          npm install
+          npm install --include=dev
 
       - name: Build Frontend
         run: |
