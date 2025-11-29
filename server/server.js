@@ -43,3 +43,4 @@ mongoose
   .catch((err) => {
     console.error("Mongo connection error:", err);
   });
+console.log("Server setup complete");
