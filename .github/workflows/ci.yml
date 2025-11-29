@@ -10,11 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout Repo
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Setup Node
       - name: Setup NodeJS
         uses: actions/setup-node@v3
         with:
@@ -45,6 +43,11 @@ jobs:
         run: |
           cd client
           npm install --include=dev
+
+      - name: Fix vite permission
+        run: |
+          cd client
+          chmod +x node_modules/.bin/vite
 
       - name: Build Frontend
         run: |
