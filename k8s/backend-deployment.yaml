@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lostfound-backend
+  namespace: lostfound
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lostfound-backend
+  template:
+    metadata:
+      labels:
+        app: lostfound-backend
+    spec:
+      containers:
+        - name: backend
+          image: YOUR_DOCKER_USERNAME/lostfound-backend:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: lostfound-config
+            - secretRef:
+                name: lostfound-secrets
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 30
+            periodSeconds: 20

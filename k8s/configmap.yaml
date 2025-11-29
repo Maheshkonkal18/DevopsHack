@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lostfound-config
+  namespace: lostfound
+data:
+  NODE_ENV: "production"
+  # Add any other non-secret env variables here

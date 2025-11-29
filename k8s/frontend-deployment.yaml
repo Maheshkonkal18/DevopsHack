@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lostfound-frontend
+  namespace: lostfound
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lostfound-frontend
+  template:
+    metadata:
+      labels:
+        app: lostfound-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: YOUR_DOCKER_USERNAME/lostfound-frontend:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
